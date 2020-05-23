@@ -11,7 +11,7 @@ CREATE TABLE department (
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30),
-    salary DECIMAL (8,2),
+    salary INT,
     department_id INT,
     PRIMARY KEY (id),
     FOREIGN KEY (department_id) REFERENCES department(id)
@@ -26,3 +26,7 @@ CREATE TABLE employees (
     FOREIGN KEY (role_id) REFERENCES roles(id),
     PRIMARY KEY (id)
 );
+
+SELECT * FROM department;
+
+INSERT INTO employees(first_name,last_namee,role_id) VALUES ('jack','wallen',1);
