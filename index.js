@@ -45,22 +45,33 @@ const questionsBegin = function () {
     ],
     })
     .then(response => {
-         switch(response.nextStep) {
-            case 'View All Employees by Department' : viewByDept(); break;
-            case 'View All Employees by Manager' : viewByManager(); break;
-            case 'View All Roles' : viewAllRoles(); break;
-            case 'Add Employee' : addEmp(); break;
-            case 'Remove Employee' : removeEmp(); break;
-            case 'Add Role' : addRole(); break;
-            case 'Remove Role' : removeRole(); break;
-            case 'Add Department' : addDept(); break;
-            case 'Remove Department' : removeDept(); break;
-            case 'Update Employee Role' : updateEmpRole(); break;
-            case 'Update Employee Manager' : updateEmpMan(); break;
-        };
+      init(response.nextStep);
     });
 };
 
+
+async function init(choice){
+  let response;
+  switch(choice) {
+    case 'View All Employees by Department' : viewByDept(); break;
+    case 'View All Employees by Manager' : viewByManager(); break;
+    case 'View All Roles' : viewAllRoles(); break;
+    case 'Add Employee' : {
+      response = await addEmp();
+      break;}
+    case 'Remove Employee' : removeEmp(); break;
+    case 'Add Role' : {
+      response = await addRole();
+      break;}
+    case 'Remove Role' : removeRole(); break;
+    case 'Add Department' : {
+      response = await addDept();
+      break;}
+    case 'Remove Department' : removeDept(); break;
+    case 'Update Employee Role' : updateEmpRole(); break;
+    case 'Update Employee Manager' : updateEmpMan(); break;
+};
+}
 //When select "view all employees by Department", display *
 // function viewByDept();
 // function viewByDept();
@@ -80,8 +91,8 @@ const questionsBegin = function () {
     //roleID
     //Who is their manager
 //function addEmp();
-function addEmp() {
-    inquirer.prompt ([{
+ async function addEmp() {
+    return inquirer.prompt ([{
     type: "input",
     name: "firstName",
     message:"What is the employee's first name?"
@@ -99,17 +110,12 @@ function addEmp() {
     {
     type: "input",
     name: "manager",
-    message:"Who is the employee's manager?"    
+    message:"What is the employee's manager ID?"    
     }]);
 };
 
-let response = inquirer.prompt();
-console.log ("hi dean...line 109", response.lastName);
 
-async function init(){
-    // let newEmployee = [response.lastName, ];
-    console.table(response);
-}
+
 
 //     //When user selects "Remove employee", provide list of all employees into a 
 //     //list/choices array to select from
@@ -119,27 +125,27 @@ async function init(){
 
 
 
-// //When user Selects "Add Role", prompts user to imput a new role
-// //display "New role has been added"
-// //function addRole();
-// function addRole() {
-//     inquirer.prompt ({
-//         type: "input",
-//         name: "title",
-//         message:"What is the title of the role?"
-//     },
-//     {
-//         type: "input",
-//         name: "salary",
-//         message:"What is the salary of the role?"    
-//     },
-//     {
-//         type: "input",
-//         name: "deptId",
-//         message:"What is the department ID for the role?"    
-//     },
-//     );
-// };
+//When user Selects "Add Role", prompts user to imput a new role
+//display "New role has been added"
+//function addRole();
+async function addRole() {
+  return inquirer.prompt ([{
+        type: "input",
+        name: "title",
+        message:"What is the title of the role?"
+    },
+    {
+        type: "input",
+        name: "salary",
+        message:"What is the salary of the role?"    
+    },
+    {
+        type: "input",
+        name: "deptId",
+        message:"What is the department ID for the role?"    
+    },
+  ]);
+};
 
 // //When user selects "remove role", provides list of current roles into a 
 // //list/choices array to select from
@@ -148,22 +154,22 @@ async function init(){
 // function removeRole();
 
 
-// //When user Selects "Add Dept", prompts user to imput a new dept
-// //display "New dept has been added"
-// //function addRole();
-// function addDept() {
-//     inquirer.prompt ({
-//         type: "input",
-//         name: "deptName",
-//         message:"What is the name of the new department?"
-//     },
-//     {
-//         type: "input",
-//         name: "deptId",
-//         message:"What is the department ID for the role?"    
-//     },
-//     );
-// };
+//When user Selects "Add Dept", prompts user to imput a new dept
+//display "New dept has been added"
+//function addRole();
+function addDept() {
+  return inquirer.prompt ([{
+        type: "input",
+        name: "deptName",
+        message:"What is the name of the new department?"
+    },
+    {
+        type: "input",
+        name: "deptId",
+        message:"What is the department ID for the role?"    
+    },
+  ]);
+};
 
 // //When user selects "remove role", provides list of current roles into a 
 // //list/choices array to select from
