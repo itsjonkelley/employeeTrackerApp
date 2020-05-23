@@ -3,23 +3,26 @@ CREATE DATABASE employeeTrack_db;
 USE employeeTrack_db;
 
 CREATE TABLE department (
-    id INT NOT NULL,
-    name varchar (30),
-    primary key (id)
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR (30) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE roles (
-    id INT NOT NULL,
-    title varchar (30),
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30),
     salary DECIMAL (8,2),
-    departme
-    primary key (id)
+    department_id INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (deparment_id) REFERENCES department(id)
 );
 
 CREATE TABLE employees (
-    id INT NOT NULL,
-    first_name varchar (30),
-    last_name varchar (30),
-    FOREIGN KEY 
-    primary key (id)
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR (30),
+    last_name VARCHAR (30),
+    role_id INT,
+    manager_name VARCHAR (30) NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    PRIMARY KEY (id)
 );
