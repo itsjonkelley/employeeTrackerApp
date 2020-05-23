@@ -1,21 +1,26 @@
 require ('dotenv').config();
 const inquirer = require("inquirer");
 const cTable = require('console.table');
+const PORT = process.env.PORT || 3306;
 //mysql
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
+  port     :  process.env.PORT,
   user     :  process.env.userDB,
   password :  process.env.passDB,
   database : 'employeeTrack_DB'
 });
  
-connection.connect();
+
  
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
+connection.connect(function(err) {
+    if (err) throw err;
+    questionsBegin();
+  });
+
+
+
  
 // connection.end();
 
@@ -24,7 +29,7 @@ const questionsBegin = function () {
    inquirer.prompt ({
     type: "list",
     name: "nextStep",
-    message:"Wwhat would you like to do?",
+    message:"What would you like to do?",
     choices: [
         "View All Employees by Department",
         "View All Employees by Manager",
@@ -39,21 +44,73 @@ const questionsBegin = function () {
     })
     .then(response => {
          switch(response.nextStep) {
-            // simple view items 
             case 'View All Employees by Department' : viewByDept(); break;
             case 'View All Employees by Manager' : viewByManager(); break;
             case 'View All Roles' : viewAllRoles(); break;
+            case 'Add Employee' : addEmp(); break;
+            case 'Remove Employee' : removeEmp(); break;
+            case 'Update Employee Role' : updateEmpRole(); break;
+            case 'Update Employee Manager' : updateEmpMan(); break;
+            case 'Add Role' : addRole(); break;
+            case 'Remove Role' : removeRole(); break;
         };
     });
 };
 
+//When select "view all employees by Department", display *
+// function viewByDept();
 function viewByDept();
 
+//When Select "view all employees by Manager", display all employees with a manager
+// function viewByManager();
 function viewByManager();
 
+// function viewAllRoles();
 function viewAllRoles();
 
+//When select Add Employee ***Go through next set of questions***
 
+//Ask following:
+    //first_name
+    //last_name
+    //title
+    //department
+    //salary
+    //Who is their manager
+//function addEmp();
+function addEmp();
+
+    //When user selects "Remove employee", provide list of all employees into a 
+    //list/choices array to select from
+    //When user selects the employee name, displays "Employee has been removed"
+//function removeEmp();
+function removeEmp();
+
+
+//When user selects Update Employee role, provide list of all employees into a 
+    //list/choices array to select from
+    //When user selects employee role to update, prompts the user "What is their new role?"
+    //Once new role has been inputed, provide display "employee's role has been updated"
+//function updateEmpRole();
+function updateEmpRole();
+
+//When user selects Update Employee Manager, provide list of all current employees into a 
+    // //list/choices array to select from
+    // //When user selects employee role to update, prompts the user "Who is their new manager?"
+    // //Once new role has been inputed, display "employee's manager has been updated"
+//function updateEmpMan();
+function updateEmpMan();
+
+//When user Selects "Add Role", prompts user to imput a new role
+    //display "New role has been added"
+//function addRole();
+function addRole();
+
+//When user selects "remove role", provides list of current roles into a 
+    //list/choices array to select from
+    //when user selects role to remove, displays "Role has successfully been removed"
+//function removeRole();
+function removeRole();
 
 
 

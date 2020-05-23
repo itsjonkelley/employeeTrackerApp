@@ -17,10 +17,10 @@ VALUES
 
 INSERT INTO employees (first_name, last_name, role_id, manager_name)
 VALUES
-('John', 'Doe', 1, Ashley Rodriguez),
-('Mike', 'Chan', 2, Ashley Rodriguez),
-('Ashley', 'Rodriquez', 3, Ashley Rodriguez),
-('Kevin', 'Tupik', 4, Ashley Rodriguez),
-('Malia', 'Brown', 5, Ashley Rodriguez),
-('Sarah', 'Lourd', 6, Ashley Rodriguez),
-('Tom', 'Allen', 7, Ashley Rodriguez);
+('John', 'Doe', 1, 'Ashley Rodriguez'),
+('Mike', 'Chan', 2, 'John Doe'),
+('Ashley', 'Rodriquez', 3, null),
+('Kevin', 'Tupik', 4, 'Ashley Rodriguez'),
+('Malia', 'Brown', 5, null),
+('Sarah', 'Lourd', 6, null),
+('Tom', 'Allen', 7, 'Sarah Lourd');
