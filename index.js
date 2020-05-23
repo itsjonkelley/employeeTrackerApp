@@ -78,7 +78,39 @@ function viewAllRoles();
     //salary
     //Who is their manager
 //function addEmp();
-function addEmp();
+function addEmp() {
+    inquirer.prompt ({
+    type: "input",
+    name: "firstName",
+    message:"What is the employee's first name?"
+    },
+    {
+    type: "input",
+    name: "lastName",
+    message:"What is the employee's last name?"    
+    },
+    {
+    type: "input",
+    name: "title",
+    message:"What is the employee's title?"    
+    },
+    {
+    type: "input",
+    name: "dept",
+    message:"Which department is employee in?"    
+    },
+    {
+    type: "input",
+    name: "salary",
+    message:"What is the employee's salary?"    
+    },
+    {
+    type: "input",
+    name: "manager",
+    message:"Who is the employee's manager?"    
+    },
+    );
+};
 
     //When user selects "Remove employee", provide list of all employees into a 
     //list/choices array to select from
