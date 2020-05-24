@@ -58,6 +58,7 @@ async function init(choice){
     case 'View All Roles' : viewAllRoles(); break;
     case 'Add Employee' : {
       response = await addEmp();
+      console.log(response.lastName)
       break;}
     case 'Remove Employee' : removeEmp(); break;
     case 'Add Role' : {
@@ -71,7 +72,28 @@ async function init(choice){
     case 'Update Employee Role' : updateEmpRole(); break;
     case 'Update Employee Manager' : updateEmpMan(); break;
 };
+
 }
+
+
+
+// let query = connection.connect(
+//   "INSERT INTO employee SET ?",
+//   {
+//       first_name: response.firstName,
+//       last_name: response.lastName,
+//       role_id: response.roleId,
+//       manager_id: response.manager
+//   },
+//   function (err, res) {
+//       if (err) throw err;
+//       // console.log(divider.repeat(120));
+//       // console.log(res.affectedRows + " new Employee inserted!\n");
+//       // Call updateProduct AFTER the INSERT completes
+//   }
+// );
+
+
 //When select "view all employees by Department", display *
 // function viewByDept();
 // function viewByDept();
@@ -112,7 +134,23 @@ async function init(choice){
     name: "manager",
     message:"What is the employee's manager ID?"    
     }]);
-};
+  };
+
+// let query2 = connection.connect(
+//   "INSERT INTO employees SET ?",
+//   {
+//       first_name: first_name,
+//       last_name: last_name,
+//       role_id: role_id,
+//       manager_id: manager_id
+//   },
+//   function (err, res) {
+//       if (err) throw err;
+//       // console.log(divider.repeat(120));
+//       // console.log(res.affectedRows + " new Employee inserted!\n");
+//       // Call updateProduct AFTER the INSERT completes
+//   }
+// );
 
 
 
