@@ -30,4 +30,8 @@ CREATE TABLE employees (
 
 SELECT * FROM department;
 
+select first_name AS 'First Name', last_name AS 'Last Name', name AS 'Department' FROM employeeTrack_db.employees, employeeTrack_db.department WHERE roles.department_id = department.id;
+
+AND employeeTrack_db.roles.id = roles.id;
+
 INSERT INTO employees(first_name,last_namee,role_id) VALUES ('jack','wallen',1);

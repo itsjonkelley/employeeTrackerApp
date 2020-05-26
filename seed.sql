@@ -1,3 +1,5 @@
+USE employeeTrack_db;
+
 INSERT INTO department (name)
 VALUES 
 ('Sales'),
