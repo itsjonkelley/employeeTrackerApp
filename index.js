@@ -58,15 +58,17 @@ async function init(choice){
   //EMPLOYEES: VIEW, ADD, REMOVE
       case 'View All Employees' : viewAllEmp(); break; //MINIMUM - done
       case 'Add Employee' : {
-        response = await addEmp();
-        console.log(response.lastName);
-      break;} //MINIMUM
+          response = await addEmp();
+          console.log(response.lastName);
+          let sqlEmp = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                        VALUES (response.firstName, response.lastName, response.roleId, response.manager)`;
+          break;} //MINIMUM
       case 'Remove Employee' : removeEmp(); break; //BONUS
   //ROLES: VIEW, ADD, REMOVE
       case 'View All Roles' : viewAllRoles(); break; //MINIMUM - done
       case 'Add Role' : {
-        response = await addRole();
-        break;} //MINIMUM
+          response = await addRole();
+          break;} //MINIMUM
       case 'Remove Role' : removeRole(); break; //BONUS
   //DEPARTMENTS: VIEW, ADD, REMOVE
       case 'View All Departments' : viewAllDept(); break; //MINIMUM - done
@@ -79,7 +81,7 @@ async function init(choice){
       case 'View All Employees by Manager' : viewByManager(); break; //BONUS
       case 'Update Employee Role' : updateEmpRole(); break; //MINIMUM
       case 'Update Employee Manager' : updateEmpMan(); break; //BONUS
-        };
+  };
 
 }
 
@@ -88,8 +90,9 @@ async function init(choice){
 //View functions:
 //VIEW ALL EMPLOYEES FXN*****
 function viewAllEmp() {
-  var query = connection.query("select first_name AS 'First Name', last_name AS 'Last Name' FROM employeeTrack_db.employees", function(err, res) {
+  var query = connection.query("SELECT first_name AS 'First Name', last_name AS 'Last Name' FROM employeeTrack_db.employees", function(err, res) {
     if (err) throw err;
+    console.log("");
     console.table(res);
 });
 questionsBegin();
@@ -97,8 +100,9 @@ questionsBegin();
 
 //VIEW ALL EMPLOYEES FXN*****
 function viewAllRoles() {
-  var query = connection.query("select title AS 'Role Title' FROM employeeTrack_db.roles", function(err, res) {
+  var query = connection.query("SELECT title AS 'Role Title' FROM employeeTrack_db.roles", function(err, res) {
     if (err) throw err;
+    console.log("");
     console.table(res);
 });
 questionsBegin();
@@ -106,8 +110,9 @@ questionsBegin();
 
 //VIEW ALL DEPARTMENTS FXN*****
 function viewAllDept() {
-  var query = connection.query("select name AS 'Department Title' FROM employeeTrack_db.department", function(err, res) {
+  var query = connection.query("SELECT name AS 'Department Title' FROM employeeTrack_db.department", function(err, res) {
     if (err) throw err;
+    console.log("");
     console.table(res);
 });
 questionsBegin();
@@ -257,6 +262,7 @@ function addDept() {
     function viewEmpByDept() {
       var query = connection.query("select first_name AS 'First Name', last_name AS 'Last Name', name AS 'Department' FROM employeeTrack_db.employees, employeeTrack_db.department, employeeTrack_db.roles WHERE employeeTrack_db.roles.department_id = employeeTrack_db.department.id AND employeeTrack_db.roles.id = employeeTrack_db.employees.role_id", function(err, res) {
         if (err) throw err;
+        console.log("");
         console.table(res);
     })
     questionsBegin();
