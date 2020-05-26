@@ -31,17 +31,19 @@ const questionsBegin = function () {
     name: "nextStep",
     message:"What would you like to do?",
     choices: [
-        "View All Employees by Department",
-        "View All Employees by Manager",
-        "View All Roles",
-        "Add Employee",
-        "Remove Employee",
-        "Update Employee Role",
-        "Update Employee Manager",
-        "Add Role",
-        "Remove Role",
-        "Add Department",
-        "Remove Department"
+      "View All Employees",
+      "Add Employee",
+      "Remove Employee",
+      "View All Roles",
+      "Add Role",
+      "Remove Role",
+      "View All Departments",
+      "Add Department",
+      "Remove Department",
+      "View All Employees by Department",
+      "View All Employees by Manager",
+      "Update Employee Role",
+      "Update Employee Manager"
     ],
     })
     .then(response => {
@@ -53,45 +55,64 @@ const questionsBegin = function () {
 async function init(choice){
   let response;
   switch(choice) {
-    case 'View All Employees by Department' : viewEmpByDept(); break;
-    case 'View All Employees by Manager' : viewByManager(); break;
-    case 'View All Roles' : viewAllRoles(); break;
-    case 'Add Employee' : {
-      response = await addEmp();
-      console.log(response.lastName)
-      break;}
-    case 'Remove Employee' : removeEmp(); break;
-    case 'Add Role' : {
-      response = await addRole();
-      break;}
-    case 'Remove Role' : removeRole(); break;
-    case 'Add Department' : {
-      response = await addDept();
-      break;}
-    case 'Remove Department' : removeDept(); break;
-    case 'Update Employee Role' : updateEmpRole(); break;
-    case 'Update Employee Manager' : updateEmpMan(); break;
-};
+  //EMPLOYEES: VIEW, ADD, REMOVE
+      case 'View All Employees' : viewAllEmp(); break; //MINIMUM - done
+      case 'Add Employee' : {
+        response = await addEmp();
+        console.log(response.lastName);
+      break;} //MINIMUM
+      case 'Remove Employee' : removeEmp(); break; //BONUS
+  //ROLES: VIEW, ADD, REMOVE
+      case 'View All Roles' : viewAllRoles(); break; //MINIMUM - done
+      case 'Add Role' : {
+        response = await addRole();
+        break;} //MINIMUM
+      case 'Remove Role' : removeRole(); break; //BONUS
+  //DEPARTMENTS: VIEW, ADD, REMOVE
+      case 'View All Departments' : viewAllDept(); break; //MINIMUM - done
+      case 'Add Department' : {
+          response = await addDept();
+          break;}  //MINIMUM
+      case 'Remove Department' : removeDept(); break; //BONUS
+  //UPDATES
+      case 'View All Employees by Department' : viewEmpByDept(); break; //BONUS - done
+      case 'View All Employees by Manager' : viewByManager(); break; //BONUS
+      case 'Update Employee Role' : updateEmpRole(); break; //MINIMUM
+      case 'Update Employee Manager' : updateEmpMan(); break; //BONUS
+        };
 
 }
 
 
 
-// let query = connection.connect(
-//   "INSERT INTO employee SET ?",
-//   {
-//       first_name: response.firstName,
-//       last_name: response.lastName,
-//       role_id: response.roleId,
-//       manager_id: response.manager
-//   },
-//   function (err, res) {
-//       if (err) throw err;
-//       // console.log(divider.repeat(120));
-//       // console.log(res.affectedRows + " new Employee inserted!\n");
-//       // Call updateProduct AFTER the INSERT completes
-//   }
-// );
+//View functions:
+//VIEW ALL EMPLOYEES FXN*****
+function viewAllEmp() {
+  var query = connection.query("select first_name AS 'First Name', last_name AS 'Last Name' FROM employeeTrack_db.employees", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+});
+questionsBegin();
+};
+
+//VIEW ALL EMPLOYEES FXN*****
+function viewAllRoles() {
+  var query = connection.query("select title AS 'Role Title' FROM employeeTrack_db.roles", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+});
+questionsBegin();
+};
+
+//VIEW ALL DEPARTMENTS FXN*****
+function viewAllDept() {
+  var query = connection.query("select name AS 'Department Title' FROM employeeTrack_db.department", function(err, res) {
+    if (err) throw err;
+    console.table(res);
+});
+questionsBegin();
+};
+
 
 
 //When select "view all employees by Department", display *
@@ -238,6 +259,7 @@ function addDept() {
         if (err) throw err;
         console.table(res);
     })
+    questionsBegin();
     };
 
       
