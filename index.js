@@ -79,13 +79,20 @@ async function init(choice){
             console.log("New Role Added!");
             questionsBegin();
           }); 
-          break;} //MINIMUM
+          break;} //MINIMUM - done
       case 'Remove Role' : removeRole(); break; //BONUS
   //DEPARTMENTS: VIEW, ADD, REMOVE
       case 'View All Departments' : viewAllDept(); break; //MINIMUM - done
       case 'Add Department' : {
           response = await addDept();
-          break;}  //MINIMUM
+          let sqlDept = `INSERT INTO department (name)
+                        VALUES ('${response.deptName}');`
+          connection.query(sqlDept, function (err, result) {
+            if (err) throw err;
+            console.log("New Department Added!");
+            questionsBegin();
+          }); 
+          break;}  //MINIMUM - done
       case 'Remove Department' : removeDept(); break; //BONUS
       //views by criteria
       case 'View All Employees by Department' : viewEmpByDept(); break; //BONUS - done
@@ -238,11 +245,6 @@ function addDept() {
         type: "input",
         name: "deptName",
         message:"What is the name of the new department?"
-    },
-    {
-        type: "input",
-        name: "deptId",
-        message:"What is the department ID for the role?"    
     },
   ]);
 };
