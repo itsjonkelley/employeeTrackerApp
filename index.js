@@ -59,22 +59,26 @@ async function init(choice){
       case 'View All Employees' : viewAllEmp(); break; //MINIMUM - done
       case 'Add Employee' : {
           response = await addEmp();
-          console.log(response.firstName);
-          console.log(response.lastName);
-          console.log(response.roleId);
-          console.log(response.manager);
           let sqlEmp = `INSERT INTO employees (first_name, last_name, role_id, manager_name)
                         VALUES ('${response.firstName}', '${response.lastName}', '${response.roleId}', '${response.manager}');`
           connection.query(sqlEmp, function (err, result) {
             if (err) throw err;
             console.log("New Employee Added!");
+            questionsBegin();
           });   
-          break;} //MINIMUM
+          break;} //MINIMUM - done
       case 'Remove Employee' : removeEmp(); break; //BONUS
   //ROLES: VIEW, ADD, REMOVE
       case 'View All Roles' : viewAllRoles(); break; //MINIMUM - done
       case 'Add Role' : {
           response = await addRole();
+          let sqlRole = `INSERT INTO roles (title, salary, department_id)
+                        VALUES ('${response.title}', '${response.salary}', '${response.deptId}');`
+          connection.query(sqlRole, function (err, result) {
+            if (err) throw err;
+            console.log("New Role Added!");
+            questionsBegin();
+          }); 
           break;} //MINIMUM
       case 'Remove Role' : removeRole(); break; //BONUS
   //DEPARTMENTS: VIEW, ADD, REMOVE
