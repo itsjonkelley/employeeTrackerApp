@@ -59,9 +59,16 @@ async function init(choice){
       case 'View All Employees' : viewAllEmp(); break; //MINIMUM - done
       case 'Add Employee' : {
           response = await addEmp();
+          console.log(response.firstName);
           console.log(response.lastName);
-          let sqlEmp = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
-                        VALUES (response.firstName, response.lastName, response.roleId, response.manager)`;
+          console.log(response.roleId);
+          console.log(response.manager);
+          let sqlEmp = `INSERT INTO employees (first_name, last_name, role_id, manager_name)
+                        VALUES ('${response.firstName}', '${response.lastName}', '${response.roleId}', '${response.manager}');`
+          connection.query(sqlEmp, function (err, result) {
+            if (err) throw err;
+            console.log("New Employee Added!");
+          });   
           break;} //MINIMUM
       case 'Remove Employee' : removeEmp(); break; //BONUS
   //ROLES: VIEW, ADD, REMOVE
@@ -76,9 +83,10 @@ async function init(choice){
           response = await addDept();
           break;}  //MINIMUM
       case 'Remove Department' : removeDept(); break; //BONUS
-  //UPDATES
+      //views by criteria
       case 'View All Employees by Department' : viewEmpByDept(); break; //BONUS - done
       case 'View All Employees by Manager' : viewByManager(); break; //BONUS
+      //UPDATES
       case 'Update Employee Role' : updateEmpRole(); break; //MINIMUM
       case 'Update Employee Manager' : updateEmpMan(); break; //BONUS
   };
