@@ -56,7 +56,9 @@ async function init(choice){
   let response;
   switch(choice) {
   //EMPLOYEES: VIEW, ADD, REMOVE
+    //view employee after selection
       case 'View All Employees' : viewAllEmp(); break; //MINIMUM - done
+    //add employee after selection and after input
       case 'Add Employee' : {
           response = await addEmp();
           let sqlEmp = `INSERT INTO employees (first_name, last_name, role_id, manager_name)
@@ -67,9 +69,20 @@ async function init(choice){
             questionsBegin();
           });   
           break;} //MINIMUM - done
-      case 'Remove Employee' : removeEmp(); break; //BONUS
+    //remove employee after selection and after input
+      case 'Remove Employee' : removeEmp(); {
+        response = await removeEmp();
+        let sqlEmpRemove = `DELETE FROM employees WHERE last_name = '${response.empNameRemove}';`
+        connection.query(sqlEmpRemove, function (err, result) {
+          if (err) throw err;
+          console.log("Employee has been removed!");
+          questionsBegin();
+        });
+      break;}  //BONUS
   //ROLES: VIEW, ADD, REMOVE
+    //view roles after selection
       case 'View All Roles' : viewAllRoles(); break; //MINIMUM - done
+    //add employee after selection and after input
       case 'Add Role' : {
           response = await addRole();
           let sqlRole = `INSERT INTO roles (title, salary, department_id)
@@ -80,9 +93,20 @@ async function init(choice){
             questionsBegin();
           }); 
           break;} //MINIMUM - done
-      case 'Remove Role' : removeRole(); break; //BONUS
+    //remove role after selection and after input
+      case 'Remove Role' : {removeRole(); 
+          response = await removeRole();
+          let sqlRoleRemove = `DELETE FROM roles WHERE title = '${response.roleNameRemove}';`
+          connection.query(sqlRoleRemove, function (err, result) {
+            if (err) throw err;
+            console.log("Role has been removed!");
+            questionsBegin();
+          });
+          break;} //BONUS
   //DEPARTMENTS: VIEW, ADD, REMOVE
+    //view departments after selection
       case 'View All Departments' : viewAllDept(); break; //MINIMUM - done
+    //add department after selection and after input
       case 'Add Department' : {
           response = await addDept();
           let sqlDept = `INSERT INTO department (name)
@@ -93,13 +117,22 @@ async function init(choice){
             questionsBegin();
           }); 
           break;}  //MINIMUM - done
-      case 'Remove Department' : removeDept(); break; //BONUS
-      //views by criteria
+    //remove department after selection and after input
+      case 'Remove Department' : {removeDept(); 
+          response = await removeDept();
+          let sqlDeptRemove = `DELETE FROM department WHERE name = '${response.deptNameRemove}';`
+          connection.query(sqlDeptRemove, function (err, result) {
+            if (err) throw err;
+            console.log("Department has been removed!");
+            questionsBegin();
+          });
+          break;} //BONUS
+    //views by criteria
       case 'View All Employees by Department' : viewEmpByDept(); break; //BONUS - done
-      case 'View All Employees by Manager' : viewByManager(); break; //BONUS
-      //UPDATES
+      // case 'View All Employees by Manager' : viewByManager(); break; //BONUS
+    //UPDATES
       case 'Update Employee Role' : updateEmpRole(); break; //MINIMUM
-      case 'Update Employee Manager' : updateEmpMan(); break; //BONUS
+      // case 'Update Employee Manager' : updateEmpMan(); break; //BONUS
   };
 
 }
@@ -235,6 +268,14 @@ async function addRole() {
 // //when user selects role to remove, displays "Role has successfully been removed"
 // //function removeRole();
 // function removeRole();
+function removeRole() {
+  return inquirer.prompt ([{
+        type: "input",
+        name: "roleNameRemove",
+        message:"What is the name of the role needing to be removed?"
+    },
+  ]);
+};
 
 
 //When user Selects "Add Dept", prompts user to imput a new dept
@@ -249,6 +290,25 @@ function addDept() {
   ]);
 };
 
+
+function removeDept() {
+  return inquirer.prompt ([{
+        type: "input",
+        name: "deptNameRemove",
+        message:"What is the name of the department needing to be removed?"
+    },
+  ]);
+};
+
+
+function removeEmp() {
+  return inquirer.prompt ([{
+        type: "input",
+        name: "empNameRemove",
+        message:"What is the last name of the employee needing to be removed?"
+    },
+  ]);
+};
 // //When user selects "remove role", provides list of current roles into a 
 // //list/choices array to select from
 // //when user selects role to remove, displays "Role has successfully been removed"
@@ -262,6 +322,33 @@ function addDept() {
 //     //Once new role has been inputed, provide display "employee's role has been updated"
 // //function updateEmpRole();
 // function updateEmpRole();
+
+async function updateEmpRole() {
+  return inquirer.prompt ([{
+    type: "list",
+    name: "nextStep",
+    message:"What would you like to do?",
+    choices: [
+      JSON.stringify(viewAllRoles()),
+    ]
+  },
+  // {
+  // type: "input",
+  // name: "lastName",
+  // message:"What is the employee's last name?"    
+  // },
+  // {
+  // type: "input",
+  // name: "roleId",
+  // message:"What is the employee's role ID?"    
+  // },
+  // {
+  // type: "input",
+  // name: "manager",
+  // message:"What is the employee's manager ID?"    
+// }
+]);
+};
 
 // //When user selects Update Employee Manager, provide list of all current employees into a 
 //     // //list/choices array to select from
