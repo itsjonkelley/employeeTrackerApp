@@ -11,15 +11,16 @@ var connection = mysql.createConnection({
   password :  process.env.passDB,
   database : 'employeeTrack_DB'
 });
- 
 
- 
 connection.connect(function(err) {
-    if (err) throw err;
-    questionsBegin();
-  });
+  if (err) throw err;
+  questionsBegin();
+});
 
 
+// var query2 = connection.query("SELECT title AS 'Role Title' FROM employeeTrack_db.roles");
+var roleArray = Array.from(connection.query("SELECT title AS 'Role Title' FROM employeeTrack_db.roles"));
+console.log(roleArray);
 
  
 // connection.end();
@@ -154,6 +155,9 @@ questionsBegin();
 function viewAllRoles() {
   var query = connection.query("SELECT title AS 'Role Title' FROM employeeTrack_db.roles", function(err, res) {
     if (err) throw err;
+    // rolesArray.forEach(element => {
+      
+    // });
     console.log("");
     console.table(res);
 });
@@ -322,6 +326,8 @@ function removeEmp() {
 //     //Once new role has been inputed, provide display "employee's role has been updated"
 // //function updateEmpRole();
 // function updateEmpRole();
+var roleArray = Array.from(connection.query("SELECT title AS 'Role Title' FROM employeeTrack_db.roles"));
+console.log(roleArray);
 
 async function updateEmpRole() {
   return inquirer.prompt ([{
@@ -329,7 +335,7 @@ async function updateEmpRole() {
     name: "nextStep",
     message:"What would you like to do?",
     choices: [
-      JSON.stringify(viewAllRoles()),
+      JSON.stringify(roleArray)
     ]
   },
   // {
@@ -369,52 +375,7 @@ async function updateEmpRole() {
     questionsBegin();
     };
 
-      
-
-    // {
-    // type: "input",
-    // name: "email",
-    // message:"What is the employee's email?"
-    // },
-    // //When Select "view all employees by Manager", display all employees with a manager
-    // {
-    // type: "input",
-    // name: "id",
-    // message:"What is the employee's id number?"
-    // },
-    // //When select Add Employee ***Go through next set of questions***
-    // //Ask following:
-    // //first_name
-    // //last_name
-    // //title
-    // //department
-    // //salary
-    // //Who is their manager
-    // {
-    // type: "input",
-    // name: "officeNumber",
-    // message:"What is the manager's office phone number?",
-    // when: (response) => response.role === 'Manager'
-    // },
-    // //When user selects "Remove employee", provide list of all employees into a 
-    // //list/choices array to select from
-    // //When user selects the employee name, displays "Employee has been removed"
-    // {
-    // type: "input",
-    // name: "github",
-    // message:"What is the engineer's github name?",
-    // when: (response) => response.role === 'Engineer'
-    // },
-    // //When user selects Update Employee role, provide list of all employees into a 
-    // //list/choices array to select from
-    // //When user selects employee role to update, prompts the user "What is their new role?"
-    // //Once new role has been inputed, provide prompt "employee's role has been updated"
-    // {
-    // type: "input",
-    // name: "school",
-    // message:"What is the intern's school?",
-    // when: (response) => response.role === 'Intern'
-    // },
+    
     // //When user selects Update Employee Manager, provide list of all current employees into a 
     // //list/choices array to select from
     // //When user selects employee role to update, prompts the user "Who is their new manager?"
